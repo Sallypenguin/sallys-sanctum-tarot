@@ -1,0 +1,1893 @@
+/* Bonus game page: 悪魔と66の契約. */
+.devil-game-page {
+  display: grid;
+  gap: 20px;
+  overflow-x: hidden;
+}
+
+.devil-game-hero {
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.devil-game-hero h2 {
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.devil-game-lead {
+  margin: 0 auto;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.devil-game-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 2fr);
+  align-items: stretch;
+  justify-content: center;
+  gap: 12px;
+  width: min(1240px, 100%);
+  margin: 4px auto 0;
+}
+
+.devil-game-controls__actions,
+.devil-game-settings {
+  display: grid;
+  align-items: stretch;
+  gap: 12px;
+  min-width: 0;
+}
+
+.devil-game-controls__actions {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.devil-game-settings {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.devil-control-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.devil-rule-trigger {
+  justify-self: stretch;
+  margin: 0;
+}
+
+.devil-record-reset-trigger {
+  opacity: 0.82;
+}
+
+.devil-record-reset-trigger:hover,
+.devil-record-reset-trigger:focus-visible {
+  opacity: 1;
+}
+
+.devil-game-settings .toggle-label {
+  width: 100%;
+  min-width: 0;
+}
+
+
+.devil-game-counter {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(118px, 1fr));
+  gap: 10px;
+  width: min(700px, 100%);
+  margin: 14px auto 0;
+  padding: 10px;
+  border: 1px solid rgba(216, 184, 92, 0.34);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top, rgba(216, 184, 92, 0.18), transparent 58%),
+    linear-gradient(180deg, rgba(12, 10, 28, 0.82), rgba(0, 0, 0, 0.24));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 190, 0.06),
+    0 14px 34px rgba(0, 0, 0, 0.26),
+    0 0 22px rgba(216, 184, 92, 0.08);
+}
+
+.devil-game-counter__item {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  min-height: 72px;
+  padding: 10px 12px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 184, 92, 0.26);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 244, 190, 0.10), transparent 46%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.devil-game-counter__item::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  pointer-events: none;
+  border: 1px solid rgba(216, 184, 92, 0.12);
+  border-radius: 14px;
+}
+
+.devil-game-counter__item--wins {
+  box-shadow: inset 0 0 24px rgba(255, 224, 128, 0.10);
+}
+
+.devil-game-counter__item--losses {
+  box-shadow: inset 0 0 24px rgba(150, 84, 180, 0.12);
+}
+
+.devil-game-counter__item--contracts {
+  box-shadow: inset 0 0 24px rgba(216, 184, 92, 0.14);
+}
+
+.devil-game-counter__item--mood {
+  box-shadow: inset 0 0 24px rgba(216, 184, 92, 0.12), inset 0 0 18px rgba(150, 84, 180, 0.10);
+}
+
+.devil-game-counter__label {
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-indent: 0.16em;
+}
+
+.devil-game-counter__value {
+  position: relative;
+  z-index: 1;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.55rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(216, 184, 92, 0.28);
+}
+
+.devil-game-counter__item--mood .devil-game-counter__label,
+.devil-game-counter__value--mood {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.devil-game-counter__value--mood {
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+}
+
+
+@media (max-width: 640px) {
+  .devil-game-counter {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    width: min(100%, 440px);
+    margin-top: 12px;
+    padding: 7px;
+    border-radius: 18px;
+  }
+
+  .devil-game-counter__item {
+    min-height: 62px;
+    padding: 8px 6px;
+    border-radius: 14px;
+  }
+
+  .devil-game-counter__item::before {
+    inset: 5px;
+    border-radius: 11px;
+  }
+
+  .devil-game-counter__label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+  }
+
+  .devil-game-counter__value {
+    font-size: 1.45rem;
+  }
+
+  .devil-game-counter__value--mood {
+    font-size: 1.18rem;
+  }
+
+}
+
+@media (max-width: 360px) {
+  .devil-game-counter {
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .devil-game-counter__item {
+    min-height: 56px;
+    padding-inline: 4px;
+  }
+
+  .devil-game-counter__label {
+    font-size: 0.66rem;
+  }
+
+  .devil-game-counter__value {
+    font-size: 1.32rem;
+  }
+
+  .devil-game-counter__value--mood {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .devil-game-controls {
+    grid-template-columns: 1fr;
+    width: min(720px, 100%);
+    margin-inline: auto;
+  }
+
+  .devil-game-controls__actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .devil-game-settings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.devil-game-page.is-busy .devil-game-board {
+  cursor: progress;
+}
+
+.devil-rule-dialog {
+  text-align: left;
+}
+
+.devil-rule-dialog__panel {
+  gap: 14px;
+}
+
+.devil-rule-dialog h3 {
+  margin: 0;
+  padding-inline-end: 46px;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.65rem, 5vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.devil-rule-dialog__body {
+  display: grid;
+  gap: 10px;
+}
+
+.devil-rule-dialog__body p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.85;
+}
+
+.devil-rule-dialog__body p:first-child {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.devil-contract-dialog__panel {
+  gap: 14px;
+}
+
+.devil-contract-dialog h3 {
+  margin: 0;
+  padding-inline-end: 46px;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.65rem, 5vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.devil-contract-dialog p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.devil-contract-dialog__status {
+  padding: 10px 12px;
+  border: 1px solid rgba(216, 184, 92, 0.28);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.devil-contract-list {
+  display: grid;
+  gap: 12px;
+}
+
+.devil-contract-empty,
+.devil-contract-card {
+  border: 1px solid rgba(216, 184, 92, 0.26);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 244, 190, 0.08), transparent 52%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.devil-contract-empty {
+  padding: 14px;
+  color: var(--muted);
+}
+
+.devil-contract-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  box-shadow: inset 0 0 28px rgba(116, 40, 132, 0.13);
+}
+
+.devil-contract-card__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.devil-contract-card__title .contract-seal-badge {
+  position: static;
+  max-width: none;
+  pointer-events: none;
+}
+
+.devil-contract-card h4 {
+  margin: 0;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.devil-contract-card p {
+  color: var(--text);
+}
+
+.devil-contract-card__warning {
+  color: #ffd7e8;
+}
+
+.devil-contract-card__actions {
+  display: grid;
+  gap: 6px;
+}
+
+.devil-contract-card__actions .devil-action-button {
+  width: 100%;
+  min-width: 0;
+}
+
+.devil-contract-card__disabled-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.devil-reset-dialog__panel {
+  gap: 14px;
+}
+
+.devil-reset-dialog h3 {
+  margin: 0;
+  padding-inline-end: 46px;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.65rem, 5vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.devil-reset-dialog__body {
+  display: grid;
+  gap: 10px;
+}
+
+.devil-reset-dialog__body p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.85;
+}
+
+.devil-reset-dialog__body p:first-child {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.devil-reset-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.devil-reset-dialog__actions .devil-action-button {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.devil-reset-dialog__confirm {
+  border-color: rgba(255, 154, 168, 0.46);
+  box-shadow: inset 0 0 22px rgba(120, 24, 70, 0.16);
+}
+
+.devil-game-card.is-contracted {
+  border-color: rgba(216, 184, 92, 0.52);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(142, 54, 139, 0.32),
+    0 0 22px rgba(142, 54, 139, 0.18);
+}
+
+.devil-game-card.is-contracted .devil-game-card__image-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  box-shadow: inset 0 0 34px rgba(78, 18, 96, 0.24);
+}
+
+
+/* Reuse the card-image zoom affordance from the reading and library pages. */
+.image-zoom-button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+}
+
+.image-zoom-button:hover,
+.image-zoom-button:focus-visible {
+  border-color: transparent;
+  background: transparent;
+  transform: none;
+}
+
+.image-zoom-button:focus-visible {
+  outline: 3px solid rgba(216, 184, 92, 0.95);
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+.image-zoom-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.8em;
+  padding: 0.2em 0.55em;
+  border: 1px solid rgba(216, 184, 92, 0.7);
+  border-radius: 999px;
+  background: rgba(13, 11, 20, 0.78);
+  color: var(--gold);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.devil-opponent__image-button:hover .image-zoom-hint,
+.devil-opponent__image-button:focus-visible .image-zoom-hint,
+.devil-game-card__image-button:hover .image-zoom-hint,
+.devil-game-card__image-button:focus-visible .image-zoom-hint,
+.devil-voice-icon-button:hover .image-zoom-hint,
+.devil-voice-icon-button:focus-visible .image-zoom-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.devil-game-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.devil-opponent,
+.devil-game-board,
+.devil-card-area,
+.stand-confirm,
+.contract-offer,
+.devil-result {
+  border: 1px solid var(--line-soft);
+  background: rgba(0, 0, 0, 0.20);
+  border-radius: 22px;
+}
+
+.devil-opponent {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+}
+
+.devil-opponent__image-frame {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: radial-gradient(circle at top, rgba(216, 184, 92, 0.18), rgba(0, 0, 0, 0.26));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+}
+
+.devil-opponent__image-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.devil-opponent__image-button img,
+.devil-game-card__image-button img,
+.devil-voice-icon-button img {
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.devil-opponent__image-button:hover img,
+.devil-opponent__image-button:focus-visible img,
+.devil-game-card__image-button:hover img,
+.devil-game-card__image-button:focus-visible img,
+.devil-voice-icon-button:hover img,
+.devil-voice-icon-button:focus-visible img {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.devil-opponent__image-frame:focus-within,
+.devil-game-card:focus-within {
+  border-color: rgba(216, 184, 92, 0.72);
+  box-shadow: 0 0 0 1px rgba(216, 184, 92, 0.22), 0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+.devil-opponent__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.devil-opponent__speech {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgba(216, 184, 92, 0.24);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(216, 184, 92, 0.11), rgba(0, 0, 0, 0.16));
+}
+
+.devil-opponent__speech h3,
+.devil-card-area h3,
+.stand-confirm h3,
+.contract-offer h3,
+.devil-result h3 {
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+}
+
+.devil-opponent__speech p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.devil-game-board {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  min-width: 0;
+}
+
+.devil-card-area {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  min-width: 0;
+}
+
+.devil-card-area.is-winner {
+  border-color: rgba(255, 224, 128, 0.86);
+  background:
+    radial-gradient(circle at top left, rgba(255, 224, 128, 0.20), transparent 42%),
+    linear-gradient(180deg, rgba(216, 184, 92, 0.14), rgba(0, 0, 0, 0.20));
+  box-shadow:
+    0 0 0 1px rgba(255, 224, 128, 0.22),
+    0 0 26px rgba(255, 224, 128, 0.30),
+    0 18px 46px rgba(0, 0, 0, 0.38);
+}
+
+.devil-card-area.is-winner::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  border-radius: 16px;
+  box-shadow: inset 0 0 34px rgba(255, 224, 128, 0.24);
+}
+
+.devil-victory-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  min-width: 5.5em;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 224, 128, 0.82);
+  border-radius: 999px;
+  background: rgba(216, 184, 92, 0.18);
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-indent: 0.12em;
+  box-shadow: 0 0 18px rgba(255, 224, 128, 0.32);
+}
+
+.devil-victory-badge[hidden] {
+  display: none;
+}
+
+.devil-card-area__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 14px;
+}
+
+.devil-card-area__title-row {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.devil-card-area__title-row h3 {
+  margin: 0;
+}
+
+.devil-card-area__header p {
+  margin: 0;
+  margin-inline-start: auto;
+  color: var(--gold);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-shadow: 0 0 12px rgba(216, 184, 92, 0.22);
+}
+
+.devil-card-area__header p.is-bust {
+  color: #ff8f8f;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(255, 84, 84, 0.34);
+}
+
+.devil-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-width: 0;
+}
+
+.devil-game-page[data-phase="loading"] .devil-card-row:empty,
+.devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+  min-height: 238px;
+}
+
+.devil-game-card {
+  flex: 0 1 118px;
+  width: min(118px, calc(50vw - 34px));
+  min-width: 86px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(216, 184, 92, 0.32);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+.devil-game-card.is-dealt {
+  animation: devilCardDealIn 260ms cubic-bezier(0.2, 0.78, 0.22, 1) both;
+}
+
+@keyframes devilCardDealIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.965);
+    filter: brightness(1.24) saturate(1.08);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+.devil-game-card__image-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.devil-game-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.devil-game-card__caption {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  line-height: 1.45;
+}
+
+.devil-game-card__name {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.devil-game-card__score {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.devil-game-card.is-hidden .devil-game-card__name {
+  color: var(--gold);
+}
+
+.devil-actions,
+.stand-confirm__actions,
+.contract-offer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.devil-action-button {
+  min-width: 12em;
+  min-height: 50px;
+}
+
+/* Keep the hero controls shrinkable inside their grid cells.
+   The generic action-button minimum width is for in-game command buttons;
+   here it would overflow into neighboring controls at midrange widths. */
+.devil-game-controls .devil-action-button,
+.devil-game-controls .devil-control-button {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.devil-action-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+  transform: none;
+}
+
+.devil-modal:not([open]) {
+  display: none !important;
+}
+
+.devil-modal[open] {
+  display: grid;
+  width: min(92vw, 560px);
+  max-height: min(86vh, 720px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: visible;
+}
+
+.devil-modal::backdrop {
+  background: rgba(3, 4, 18, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.devil-modal__panel {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  max-height: min(86vh, 720px);
+  overflow: auto;
+  padding: 20px;
+  text-align: left;
+  border: 1px solid rgba(216, 184, 92, 0.52);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(32, 28, 45, 0.98), rgba(7, 8, 33, 0.98));
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.55);
+}
+
+.devil-modal[open] .devil-modal__panel {
+  animation: devilModalRise 210ms cubic-bezier(0.2, 0.78, 0.22, 1) both;
+}
+
+@keyframes devilModalRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.devil-modal.contract-offer[open] .devil-modal__panel,
+.devil-modal.devil-result[open] .devil-modal__panel {
+  animation: devilModalSlowRise 2500ms cubic-bezier(0.24, 0, 0.18, 1) both;
+  will-change: opacity, transform;
+}
+
+@keyframes devilModalSlowRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.982);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.devil-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.devil-modal.stand-confirm,
+.devil-modal.contract-offer,
+.devil-modal.devil-result {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.stand-confirm,
+.contract-offer {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-color: rgba(216, 184, 92, 0.48);
+  background: linear-gradient(180deg, rgba(216, 184, 92, 0.16), rgba(0, 0, 0, 0.18));
+}
+
+.stand-confirm p,
+.contract-offer p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.contract-offer__detail {
+  padding: 10px 12px;
+  border: 1px solid rgba(216, 184, 92, 0.28);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 0.96rem;
+}
+
+.contract-offer h3 {
+  padding-inline-end: 46px;
+}
+
+.devil-result {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.devil-result__summary {
+  margin: 0;
+  color: var(--gold);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.devil-result__ending {
+  margin: 0;
+  white-space: pre-line;
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.image-dialog {
+  width: min(92vw, 760px);
+  max-width: 92vw;
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid rgba(216, 184, 92, 0.45);
+  border-radius: 22px;
+  background: rgba(15, 12, 24, 0.96);
+  color: var(--text);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.72), 0 0 42px rgba(216, 184, 92, 0.18);
+  overflow: visible;
+}
+
+.image-dialog::backdrop {
+  background: rgba(6, 5, 10, 0.74);
+  backdrop-filter: blur(5px);
+}
+
+.image-dialog-panel {
+  position: relative;
+  padding: clamp(14px, 3vw, 22px);
+}
+
+.image-dialog-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(216, 184, 92, 0.7);
+  border-radius: 999px;
+  background: rgba(20, 16, 30, 0.98);
+  color: var(--gold);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+.image-dialog-close:hover,
+.image-dialog-close:focus-visible {
+  background: rgba(38, 29, 48, 0.98);
+  outline: 3px solid rgba(216, 184, 92, 0.42);
+  outline-offset: 2px;
+}
+
+.image-dialog-frame {
+  display: grid;
+  place-items: center;
+  max-height: calc(92vh - 44px);
+  overflow: hidden;
+}
+
+.image-dialog-img {
+  display: block;
+  width: auto;
+  max-width: min(82vw, 560px);
+  max-height: calc(92vh - 72px);
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(216, 184, 92, 0.35);
+  background: #111;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65);
+}
+
+.image-dialog.is-reversed .image-dialog-img {
+  transform: rotate(180deg);
+}
+
+.image-dialog.is-square .image-dialog-img {
+  max-width: min(74vw, 420px);
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 520px) {
+  .image-dialog {
+    width: min(94vw, 420px);
+    max-width: 94vw;
+    border-radius: 18px;
+  }
+
+  .image-dialog-panel {
+    padding: 12px;
+  }
+
+  .image-dialog-close {
+    top: -10px;
+    right: -8px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .image-dialog-img {
+    max-width: 86vw;
+    max-height: calc(92vh - 60px);
+    border-radius: 14px;
+  }
+
+  .image-zoom-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .devil-game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .devil-opponent {
+    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .devil-game-page {
+    gap: 16px;
+  }
+
+  .devil-opponent {
+    grid-template-columns: 1fr;
+  }
+
+  .devil-opponent__image-frame {
+    width: min(240px, 100%);
+    margin-inline: auto;
+  }
+
+  .devil-game-board,
+  .devil-opponent,
+  .devil-card-area,
+  .stand-confirm,
+  .contract-offer,
+  .devil-result {
+    border-radius: 18px;
+  }
+
+  .devil-actions,
+  .stand-confirm__actions,
+  .stand-confirm__actions,
+  .contract-offer__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .devil-action-button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .devil-card-row {
+    gap: 10px;
+  }
+
+  .devil-game-card {
+    flex-basis: calc(50% - 5px);
+    width: calc(50% - 5px);
+    min-width: 0;
+  }
+
+  .devil-game-card__caption {
+    padding: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .devil-game-page *,
+  .devil-game-page *::before,
+  .devil-game-page *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* v3 draft: mobile-first game-board tuning. PC layout above is intentionally left unchanged. */
+
+@media (max-width: 640px) {
+  .devil-game-body .app {
+    padding-inline: 10px;
+    padding-bottom: calc(112px + env(safe-area-inset-bottom));
+  }
+
+  .devil-game-page.panel {
+    padding: 12px;
+  }
+
+  .devil-game-page {
+    gap: 12px;
+  }
+
+  .devil-game-hero {
+    gap: 6px;
+    text-align: left;
+  }
+
+  .devil-game-hero .eyebrow {
+    margin-bottom: 2px;
+  }
+
+  .devil-game-hero h2 {
+    font-size: clamp(1.78rem, 9vw, 2.45rem);
+  }
+
+  .devil-game-lead {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .devil-game-controls {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: none;
+    justify-content: stretch;
+    align-items: stretch;
+    justify-items: stretch;
+    gap: 8px;
+  }
+
+  .devil-game-controls__actions,
+  .devil-game-settings {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .devil-control-button,
+  .devil-rule-trigger,
+  .devil-start-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+  }
+
+  .devil-game-settings .toggle-label {
+    justify-content: flex-start;
+  }
+  .devil-rule-dialog__body {
+    gap: 9px;
+  }
+
+  .devil-rule-dialog__body p {
+    line-height: 1.75;
+  }
+
+
+  .devil-game-layout {
+    gap: 12px;
+  }
+
+  .devil-opponent {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .devil-opponent__image-frame {
+    width: 76px;
+    margin: 0;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .devil-opponent__speech {
+    gap: 4px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .devil-opponent__speech h3 {
+    margin-bottom: 0;
+    font-size: 1.18rem;
+  }
+
+  .devil-opponent__speech p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .devil-game-board {
+    gap: 10px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .stand-confirm,
+  .contract-offer {
+    order: 3;
+    gap: 9px;
+    padding: 11px;
+    border-radius: 16px;
+  }
+
+  .stand-confirm h3,
+  .contract-offer h3,
+  .devil-result h3 {
+    margin-bottom: 0;
+    font-size: 1.22rem;
+  }
+
+  .stand-confirm p,
+  .contract-offer p,
+  .devil-result__ending {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .devil-result {
+    order: 4;
+    gap: 8px;
+    padding: 11px;
+    border-radius: 16px;
+  }
+
+  .devil-card-area--devil {
+    order: 5;
+  }
+
+  .devil-card-area--player {
+    order: 6;
+  }
+
+  .devil-card-area {
+    gap: 8px;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .devil-card-area__header {
+    display: grid;
+    gap: 3px;
+  }
+
+  .devil-card-area h3 {
+    margin-bottom: 0;
+    font-size: 1.24rem;
+  }
+
+  .devil-card-area__header p {
+    font-size: 1.24rem;
+    line-height: 1.1;
+  }
+
+  .devil-victory-badge {
+    justify-self: start;
+    min-width: 0;
+    padding: 3px 10px;
+    font-size: 0.82rem;
+  }
+
+  .devil-card-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+    gap: 8px;
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 150px;
+  }
+
+  .devil-game-card {
+    width: auto;
+    min-width: 0;
+    border-radius: 11px;
+    box-shadow: none;
+  }
+
+  .devil-game-card img {
+    aspect-ratio: 2 / 3;
+  }
+
+  .devil-game-card__caption {
+    gap: 1px;
+    padding: 5px 6px 6px;
+    line-height: 1.25;
+  }
+
+  .devil-game-card__name {
+    overflow: hidden;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .devil-game-card__score {
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .devil-actions {
+    position: sticky;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    z-index: 5;
+    order: 7;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid rgba(216, 184, 92, 0.34);
+    border-radius: 16px;
+    background: rgba(7, 8, 33, 0.94);
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(12px);
+  }
+
+  .devil-game-page[data-phase="contract-offer"] .devil-actions,
+  .devil-game-page[data-phase="stand-confirm"] .devil-actions {
+    display: none;
+  }
+
+  .stand-confirm__actions,
+  .contract-offer__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .devil-action-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding-inline: 10px;
+    font-size: 0.94rem;
+  }
+
+  .devil-modal[open] {
+    width: min(94vw, 560px);
+    max-height: min(88vh, 720px);
+  }
+
+  .devil-modal__panel {
+    gap: 10px;
+    max-height: min(88vh, 720px);
+    padding: 18px 14px 14px;
+    border-radius: 18px;
+  }
+
+  .devil-modal__close {
+    top: 8px;
+    right: 8px;
+    width: 42px;
+    min-height: 42px;
+  }
+
+  .devil-modal.stand-confirm,
+  .devil-modal.contract-offer,
+  .devil-modal.devil-result {
+    order: initial;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .devil-modal .stand-confirm__actions,
+  .devil-modal .contract-offer__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .devil-modal .devil-action-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .devil-game-body .back-to-top {
+    bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 420px) {
+
+  .devil-card-row {
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 7px;
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 142px;
+  }
+
+  .devil-game-card {
+    width: auto;
+    min-width: 0;
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .devil-opponent {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .devil-opponent__image-frame {
+    width: 64px;
+  }
+
+  .devil-card-row {
+    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 132px;
+  }
+
+  .devil-game-card__name {
+    font-size: 0.72rem;
+  }
+
+  .devil-game-card__score {
+    font-size: 0.68rem;
+  }
+}
+
+/* v6 draft: mobile board compression and relocated devil voice. */
+.devil-opponent__speech--mobile,
+.devil-voice-icon,
+.mobile-card-score {
+  display: none;
+}
+
+.devil-voice-icon-button {
+  position: relative;
+  display: block;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  line-height: 0;
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .devil-opponent {
+    display: none;
+  }
+
+  .devil-opponent__speech--desktop {
+    display: none;
+  }
+
+  .devil-opponent__speech--mobile {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: start;
+    order: 2;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .devil-voice-icon-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+  }
+
+  .devil-voice-icon {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(216, 184, 92, 0.46);
+    border-radius: 18px;
+    object-fit: cover;
+    background: radial-gradient(circle at top, rgba(216, 184, 92, 0.20), rgba(0, 0, 0, 0.28));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  }
+
+  .devil-opponent__speech-content {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .devil-card-area--devil {
+    order: 1;
+  }
+
+  .devil-card-area--player {
+    order: 3;
+  }
+
+  .devil-actions {
+    order: 4;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .devil-opponent {
+    display: none;
+  }
+
+  .devil-opponent__speech--desktop {
+    display: none;
+  }
+
+  .devil-opponent__speech--mobile {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: start;
+    order: 2;
+    gap: 9px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .devil-voice-icon {
+    display: block;
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(216, 184, 92, 0.46);
+    border-radius: 16px;
+    object-fit: cover;
+    background: radial-gradient(circle at top, rgba(216, 184, 92, 0.20), rgba(0, 0, 0, 0.28));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  }
+
+  .devil-opponent__speech-content {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .devil-card-area--devil {
+    order: 1;
+  }
+
+  .devil-card-area--player {
+    order: 3;
+  }
+
+  .devil-actions {
+    order: 4;
+  }
+
+  .devil-card-area__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 8px;
+  }
+
+  .devil-card-area__header p {
+    font-size: 1.18rem;
+    line-height: 1.1;
+  }
+
+  .devil-card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .devil-game-card {
+    flex: 0 0 54px;
+    width: 54px;
+    min-width: 0;
+    border-radius: 9px;
+  }
+
+  .devil-game-card__caption {
+    display: block;
+    padding: 3px 2px 4px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .devil-game-card__name,
+  .desktop-card-score {
+    display: none;
+  }
+
+  .mobile-card-score {
+    display: inline;
+  }
+
+  .devil-game-card__score {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 104px;
+  }
+}
+
+@media (max-width: 420px) {
+  .devil-card-area__header p {
+    font-size: 1.12rem;
+  }
+
+  .devil-game-card {
+    flex-basis: 50px;
+    width: 50px;
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 98px;
+  }
+}
+
+@media (max-width: 360px) {
+  .devil-card-area__header p {
+    font-size: 1.04rem;
+  }
+
+  .devil-game-card {
+    flex-basis: 46px;
+    width: 46px;
+  }
+
+  .devil-game-page[data-phase="loading"] .devil-card-row:empty,
+  .devil-game-page[data-phase="dealing"] .devil-card-row:empty {
+    min-height: 91px;
+  }
+
+  .devil-game-card__score {
+    font-size: 0.94rem;
+  }
+}
+
+/* v8: stand confirmation controls. */
+.stand-confirm h3 {
+  padding-inline-end: 0;
+}
+
+.stand-confirm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 360px) {
+  .devil-actions {
+    gap: 5px;
+  }
+
+  .devil-action-button {
+    font-size: 0.84rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .image-zoom-hint,
+  .devil-opponent__image-button img,
+  .devil-game-card__image-button img,
+  .devil-voice-icon-button img,
+  .image-dialog-img {
+    transition: none !important;
+  }
+
+  .devil-game-card.is-dealt,
+  .devil-modal[open] .devil-modal__panel {
+    animation: none !important;
+  }
+}
+
+body.animations-off .devil-game-page *,
+body.animations-off .devil-game-page *::before,
+body.animations-off .devil-game-page *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+
+/* Result modal state: show victory or defeat at a glance. */
+.devil-modal.devil-result.is-win .devil-modal__panel,
+.devil-modal.devil-result.is-loss .devil-modal__panel {
+  overflow: hidden;
+  text-align: center;
+}
+
+.devil-modal.devil-result.is-win .devil-modal__panel::before,
+.devil-modal.devil-result.is-loss .devil-modal__panel::before {
+  content: "";
+  position: absolute;
+  inset: -36% -20% auto;
+  height: 220px;
+  pointer-events: none;
+}
+
+.devil-modal.devil-result.is-win .devil-modal__panel {
+  border-color: rgba(246, 214, 118, 0.9);
+  background:
+    radial-gradient(circle at top, rgba(246, 214, 118, 0.28), transparent 44%),
+    linear-gradient(180deg, rgba(36, 31, 49, 0.98), rgba(9, 16, 32, 0.98));
+  box-shadow:
+    0 26px 82px rgba(0, 0, 0, 0.62),
+    0 0 46px rgba(246, 214, 118, 0.24),
+    inset 0 0 0 1px rgba(255, 246, 199, 0.12);
+}
+
+.devil-modal.devil-result.is-win .devil-modal__panel::before {
+  background: radial-gradient(circle, rgba(255, 239, 170, 0.42), transparent 62%);
+}
+
+.devil-modal.devil-result.is-loss .devil-modal__panel {
+  border-color: rgba(209, 76, 91, 0.86);
+  background:
+    radial-gradient(circle at top, rgba(209, 76, 91, 0.24), transparent 46%),
+    linear-gradient(180deg, rgba(42, 24, 43, 0.98), rgba(12, 7, 22, 0.98));
+  box-shadow:
+    0 26px 82px rgba(0, 0, 0, 0.68),
+    0 0 42px rgba(209, 76, 91, 0.22),
+    inset 0 0 0 1px rgba(255, 198, 205, 0.1);
+}
+
+.devil-modal.devil-result.is-loss .devil-modal__panel::before {
+  background: radial-gradient(circle, rgba(209, 76, 91, 0.34), transparent 64%);
+}
+
+.devil-modal.devil-result.is-win h3,
+.devil-modal.devil-result.is-loss h3 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(2.25rem, 9vw, 3.45rem);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.5);
+}
+
+.devil-modal.devil-result.is-win h3 {
+  color: #ffe9a6;
+}
+
+.devil-modal.devil-result.is-loss h3 {
+  color: #ff9aa8;
+}
+
+.devil-modal.devil-result.is-win h3::before,
+.devil-modal.devil-result.is-loss h3::before {
+  display: block;
+  margin: 0 auto 8px;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  opacity: 0.92;
+}
+
+.devil-modal.devil-result.is-win h3::before {
+  content: "VICTORY";
+  color: rgba(255, 239, 170, 0.86);
+}
+
+.devil-modal.devil-result.is-loss h3::before {
+  content: "DEFEAT";
+  color: rgba(255, 154, 168, 0.86);
+}
+
+.devil-modal.devil-result.is-win .devil-result__summary,
+.devil-modal.devil-result.is-loss .devil-result__summary,
+.devil-modal.devil-result.is-win .devil-result__ending,
+.devil-modal.devil-result.is-loss .devil-result__ending,
+.devil-modal.devil-result.is-win .devil-action-button,
+.devil-modal.devil-result.is-loss .devil-action-button {
+  position: relative;
+  z-index: 1;
+}
+
+.devil-modal.devil-result.is-win .devil-result__summary,
+.devil-modal.devil-result.is-loss .devil-result__summary {
+  justify-self: center;
+  min-width: min(100%, 20rem);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.24);
+  font-size: 1.03rem;
+  line-height: 1.55;
+}
+
+.devil-modal.devil-result.is-win .devil-result__summary {
+  border: 1px solid rgba(246, 214, 118, 0.38);
+  color: #fff0b8;
+}
+
+.devil-modal.devil-result.is-loss .devil-result__summary {
+  border: 1px solid rgba(255, 154, 168, 0.34);
+  color: #ffd1d8;
+}
+
+.devil-modal.devil-result.is-win .devil-result__ending,
+.devil-modal.devil-result.is-loss .devil-result__ending {
+  max-width: 31rem;
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .devil-modal.devil-result.is-win h3,
+  .devil-modal.devil-result.is-loss h3 {
+    font-size: clamp(2rem, 12vw, 2.85rem);
+  }
+
+  .devil-modal.devil-result.is-win h3::before,
+  .devil-modal.devil-result.is-loss h3::before {
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+  }
+
+  .devil-modal.devil-result.is-win .devil-result__summary,
+  .devil-modal.devil-result.is-loss .devil-result__summary {
+    padding: 9px 11px;
+    border-radius: 16px;
+    font-size: 0.96rem;
+  }
+}
+
+/* v43: keep devil game action buttons visually neutral.
+   The global .button-link default uses a gold-tinted fill for primary actions;
+   in the game room that made draw/stand/contract controls look uneven.
+   Use the same dark base for all button-link controls here, while preserving
+   the gold border/focus language of the site. */
+.devil-game-page .button-link {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.devil-game-page .button-link:hover,
+.devil-game-page .button-link:focus-visible {
+  background: rgba(255, 255, 255, 0.095);
+}
+
+.devil-game-page .button-link:disabled,
+.devil-game-page .button-link[aria-disabled="true"] {
+  background: rgba(255, 255, 255, 0.045);
+}

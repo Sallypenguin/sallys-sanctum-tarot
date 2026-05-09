@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cards | Sally’s Sanctum Tarot</title>
+  <meta name="description" content="Sally’s Sanctum Tarot のカード図鑑。ステンドグラスの大アルカナ22枚を、カード名やキーワードから探せます。" />
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="apple-touch-icon" href="images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/render.css" />
+  <script src="js/site-nav.js" defer></script>
+  <script src="js/image-assets.js" defer></script>
+  <script src="js/card-pool.js" defer></script>
+  <script src="js/devil-contracts.js" defer></script>
+  <script src="js/tarot-engine.js" defer></script>
+  <script src="js/page.js" defer></script>
+  <script src="js/cards.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+  <main class="app">
+    <header class="app-header">
+      <p class="eyebrow">Arcana Library</p>
+      <h1 class="site-title" aria-label="Sally’s Sanctum Tarot">
+        <span class="title-owner">Sally’s</span>
+        <span class="title-main">Sanctum Tarot</span>
+      </h1>
+      <p class="subtitle">ステンドグラスの大アルカナ22枚を、カード名やキーワードから探し、象徴を静かに眺めるための書庫です。</p>
+      <nav class="page-nav site-nav" aria-label="ページ移動">
+        <a class="button-link secondary page-nav__primary" href="index.html">カードを引く</a>
+        <div class="page-nav__links">
+          <a class="button-link secondary page-nav__menu-link" href="cards.html" aria-current="page">カード図鑑</a>
+          <a class="button-link secondary page-nav__menu-link" href="history.html">記録を見る</a>
+          <a class="button-link secondary page-nav__menu-link" href="devil-game.html">遊戯室</a>
+          <a class="button-link secondary page-nav__menu-link" href="about.html">このデッキについて</a>
+          <a class="button-link secondary page-nav__menu-link" href="policy.html">サイトポリシー</a>
+        </div>
+        <button type="button" class="button-link secondary page-nav__menu-button" data-site-menu-open aria-haspopup="dialog" aria-controls="site-menu-dialog-cards">メニュー</button>
+      </nav>
+      <dialog id="site-menu-dialog-cards" class="site-menu-dialog" aria-labelledby="site-menu-title-cards">
+        <div class="site-menu-dialog__panel">
+          <div class="site-menu-dialog__header">
+            <h2 id="site-menu-title-cards">メニュー</h2>
+            <button type="button" class="button-link secondary site-menu-dialog__close" data-site-menu-close aria-label="メニューを閉じる"><span aria-hidden="true">×</span></button>
+          </div>
+          <nav class="site-menu-dialog__links" aria-label="スマートフォン用ページ移動">
+            <a class="button-link secondary site-menu-dialog__link" href="index.html">カードを引く</a>
+            <a class="button-link secondary site-menu-dialog__link" href="cards.html" aria-current="page">カード図鑑</a>
+            <a class="button-link secondary site-menu-dialog__link" href="history.html">記録を見る</a>
+            <a class="button-link secondary site-menu-dialog__link" href="devil-game.html">遊戯室</a>
+            <a class="button-link secondary site-menu-dialog__link" href="about.html">このデッキについて</a>
+            <a class="button-link secondary site-menu-dialog__link" href="policy.html">サイトポリシー</a>
+          </nav>
+        </div>
+      </dialog>
+    </header>
+
+    <section id="main-content" class="panel cards-page" aria-labelledby="cards-title">
+      <div class="cards-page-hero">
+        <p class="eyebrow">Cards</p>
+        <h2 id="cards-title">カード図鑑</h2>
+        <p class="subtitle">
+          カード名、英語名、キーワード、解釈文から検索できます。
+          テーマ別の読みを選ぶと、各カードのプレビューにそのテーマでの解釈を表示します。
+        </p>
+      </div>
+
+      <nav id="arcana-thumb-nav" class="arcana-thumb-nav" aria-label="カード図鑑内のカードへ移動"></nav>
+
+      <form class="cards-tools" aria-label="カード図鑑の検索と表示設定">
+        <label class="cards-search-field" for="card-search">
+          <span>カードを探す</span>
+          <input id="card-search" name="q" type="search" placeholder="カード名・キーワードで検索" autocomplete="off" />
+        </label>
+
+        <fieldset class="theme-switcher" aria-label="テーマ別の読み">
+          <legend>テーマ別の読み</legend>
+          <div class="theme-chip-group">
+            <button type="button" class="theme-chip is-active" data-theme="general" aria-pressed="true">共通</button>
+            <button type="button" class="theme-chip" data-theme="love" aria-pressed="false">恋愛・関係性</button>
+            <button type="button" class="theme-chip" data-theme="work" aria-pressed="false">仕事・活動</button>
+            <button type="button" class="theme-chip" data-theme="selfCare" aria-pressed="false">セルフケア</button>
+            <button type="button" class="theme-chip" data-theme="creativity" aria-pressed="false">創作</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <p id="cards-status" class="cards-status" aria-live="polite"></p>
+      <div id="cards-grid" class="cards-grid" aria-live="polite"></div>
+    </section>
+
+    <footer class="app-footer" aria-label="サイト情報">
+      <nav class="footer-links" aria-label="関連ページ">
+        <a href="index.html">カードを引く</a>
+        <a href="cards.html">カード図鑑</a>
+        <a href="history.html">記録を見る</a>
+        <a href="devil-game.html">遊戯室</a>
+        <a href="about.html">このデッキについて</a>
+        <a href="policy.html">サイトポリシー</a>
+      </nav>
+      <p>© 2026 Sally’s Sanctum Tarot. Created by Sally. For symbolic reflection only.</p>
+    </footer>
+  </main>
+
+  <button type="button" id="back-to-top" class="back-to-top" hidden tabindex="-1" aria-label="ページ上部へ戻る" title="ページ上部へ戻る">↑</button>
+</body>
+</html>

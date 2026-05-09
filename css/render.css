@@ -1,0 +1,1377 @@
+.spread {
+  display: grid;
+  gap: 18px;
+  align-items: stretch;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-width: thin;
+}
+
+.spread-three {
+  grid-template-columns: repeat(3, minmax(190px, 1fr));
+}
+
+.spread-one {
+  grid-template-columns: minmax(0, 300px);
+  justify-content: center;
+  overflow-x: visible;
+}
+
+.slot {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 14px;
+  background: var(--panel2);
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  animation: dealIn 0.56s ease forwards;
+  animation-delay: calc(var(--slot-index, 0) * 130ms);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.slot:hover,
+.slot:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(216, 184, 92, 0.26), 0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+@keyframes dealIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Synergy flash: glow only the visible card image outline, not the whole slot panel. */
+.card-stage {
+  position: relative;
+}
+
+.card-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+}
+
+.slot.synergy-glow .card-stage::after {
+  animation: synergyImageOutline 1.25s ease-out 1 both;
+}
+
+@keyframes synergyImageOutline {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(216, 184, 92, 0);
+  }
+  16% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 2px rgba(255, 226, 142, 0.98),
+      0 0 18px 5px rgba(255, 226, 142, 0.78),
+      0 0 38px 12px rgba(255, 226, 142, 0.34);
+  }
+  58% {
+    opacity: 0.7;
+    box-shadow:
+      0 0 0 1px rgba(245, 216, 122, 0.68),
+      0 0 14px 4px rgba(245, 216, 122, 0.42);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(216, 184, 92, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .slot.synergy-glow .card-stage::after {
+    animation: none;
+    opacity: 1;
+    box-shadow: 0 0 0 2px rgba(245, 216, 122, 0.72), 0 0 18px rgba(245, 216, 122, 0.45);
+  }
+}
+
+.slot-title {
+  margin: 0 0 10px;
+  color: var(--gold);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.card-stage {
+  perspective: 1100px;
+  width: min(100%, 240px);
+  margin: 0 auto 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: block;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.card-stage:hover,
+.card-stage:focus-visible {
+  transform: none;
+  border: 0;
+  background: transparent;
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+}
+
+.card {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+  display: block;
+}
+
+.slot.revealed .card {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 18px 36px var(--shadow);
+  background: #111;
+}
+
+.face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.front {
+  transform: rotateY(180deg);
+}
+
+.reversed .front img {
+  transform: rotate(180deg);
+}
+
+.slot-card-summary {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  text-align: center;
+  line-height: 1.65;
+  min-height: 188px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.slot.revealed .slot-card-summary {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card-name {
+  margin: 0 0 4px;
+  font-size: 1.16rem;
+  color: var(--text);
+}
+
+.orientation {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+.slot-lead {
+  margin: 8px 0 0;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.slot-hint {
+  margin: auto 0 0;
+  padding-top: 9px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+
+/* Contract markers on reading cards.
+   Do not override .card-stage .face.front position: absolute;
+   the reading flip animation depends on front/back faces overlapping. */
+.detail-card-visual,
+.pair-mini-image-button {
+  position: relative;
+}
+
+.slot.is-contracted {
+  border-color: rgba(216, 184, 92, 0.48);
+  box-shadow:
+    inset 0 0 0 1px rgba(150, 62, 141, 0.22),
+    0 0 28px rgba(100, 32, 118, 0.16);
+}
+
+.slot.is-contracted .face.front::after,
+.detail-card-visual.is-contracted::after,
+.pair-mini-image-button.is-contracted::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 38px rgba(88, 20, 98, 0.22);
+}
+
+.pair-mini-image-button .contract-seal-badge {
+  top: 4px;
+  right: 4px;
+  padding: 3px 6px;
+  font-size: 0.58rem;
+}
+
+@media (max-width: 640px) {
+  .pair-mini-image-button .contract-seal-badge {
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0;
+    overflow: hidden;
+    font-size: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .pair-mini-image-button .contract-seal-badge::before {
+    margin-inline-end: 0;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 360px) {
+  .pair-mini-image-button .contract-seal-badge {
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+  }
+}
+
+.detail-reader {
+  width: 100%;
+  max-width: none;
+  margin: 4px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.detail-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.18);
+  scroll-margin-top: 12px;
+}
+
+.detail-tab {
+  padding: 9px 13px;
+  font-size: 0.92rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.detail-tab.is-active {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(216, 184, 92, 0.36), rgba(216, 184, 92, 0.14));
+  box-shadow: 0 0 0 2px rgba(216, 184, 92, 0.12);
+}
+
+.detail-panels {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-panel {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px;
+  background: var(--panel2);
+  line-height: 1.85;
+}
+
+.detail-panel[hidden] {
+  display: none !important;
+}
+
+.card-detail-header {
+  text-align: center;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.reading-overview {
+  display: grid;
+  gap: 12px;
+}
+
+.reading-question {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.reading-question span,
+.overview-grid span,
+.data-grid span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.overview-grid,
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.overview-grid div,
+.data-grid div {
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.17);
+  line-height: 1.6;
+}
+
+.core-meaning,
+.lead {
+  color: var(--text);
+}
+
+.section-lead {
+  color: var(--muted);
+}
+
+.result-section {
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.17);
+  padding: 0;
+  margin: 10px 0;
+}
+
+.result-section > summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-weight: 700;
+  padding: 11px 12px;
+}
+
+.result-section > p,
+.result-section > ul,
+.result-section > h3,
+.result-section > h4,
+.result-section > .tag-line,
+.result-section > .data-grid,
+.result-section > .mini-section {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.result-section > p:last-child,
+.result-section > ul:last-child,
+.result-section > .tag-line:last-child,
+.result-section > .data-grid:last-child,
+.result-section > .mini-section:last-child {
+  margin-bottom: 12px;
+}
+
+.result-section ul {
+  padding-left: 1.3rem;
+  line-height: 1.75;
+}
+
+.tag-line {
+  line-height: 2;
+}
+
+.tag-line span {
+  display: inline-block;
+  margin: 2px 5px 2px 0;
+  padding: 2px 8px;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.meta-line {
+  color: var(--muted);
+}
+
+.mini-section {
+  padding: 8px 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.mini-section:first-of-type {
+  border-top: 0;
+}
+
+.pair-section h2 {
+  text-align: center;
+  color: var(--gold);
+}
+
+.pair-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.pair-card {
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.18);
+  line-height: 1.7;
+}
+
+.pair-card.defined {
+  border-color: var(--line);
+  background: rgba(216, 184, 92, 0.08);
+}
+
+.pair-label,
+.pair-source {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.8;
+  padding: 30px 10px;
+}
+
+@media (max-width: 760px) {
+  .spread-three {
+    grid-template-columns: repeat(3, minmax(170px, 1fr));
+  }
+
+  .card-stage {
+    width: min(100%, 205px);
+  }
+
+  .detail-tabs {
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .slot {
+    padding: 12px;
+  }
+
+  .spread {
+    margin-left: -4px;
+    margin-right: -4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .spread-three {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  .card-stage {
+    width: min(100%, 170px);
+  }
+
+  .slot-card-summary {
+    min-height: 104px;
+  }
+
+  .slot-lead {
+    display: none;
+  }
+
+  .detail-panel {
+    padding: 13px;
+  }
+}
+
+@media (max-width: 520px) {
+  .detail-tabs .detail-tab {
+    width: auto;
+    flex: 1 1 auto;
+  }
+}
+
+/* v12 responsive reflow: avoid horizontal scrolling on narrow screens. */
+.spread,
+.detail-reader,
+.detail-panel,
+.result-section,
+.slot,
+.card-detail-header,
+.overview-grid,
+.data-grid,
+.pair-grid,
+.pair-card {
+  min-width: 0;
+}
+
+.detail-panel,
+.result-section,
+.pair-card,
+.slot-card-summary {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.spread {
+  overflow-x: visible;
+  width: 100%;
+}
+
+.spread-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card-stage {
+  width: min(100%, 240px);
+  max-width: 100%;
+}
+
+@media (max-width: 860px) {
+  .spread {
+    gap: 14px;
+  }
+
+  .slot {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .slot-title {
+    font-size: 0.95rem;
+  }
+
+  .card-stage {
+    width: min(100%, 205px);
+  }
+
+  .slot-card-summary {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 680px) {
+  .spread-three {
+    grid-template-columns: minmax(0, min(360px, 100%));
+    justify-content: center;
+  }
+
+  .spread-one {
+    grid-template-columns: minmax(0, min(340px, 100%));
+  }
+
+  .slot {
+    width: 100%;
+  }
+
+  .card-stage {
+    width: min(72vw, 230px);
+  }
+
+  .slot-card-summary {
+    min-height: 0;
+  }
+
+  .slot-lead {
+    display: block;
+  }
+
+  .detail-tabs {
+    border-radius: 18px;
+    justify-content: stretch;
+  }
+
+  .detail-tab {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    text-align: center;
+  }
+
+  .overview-grid,
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .card-stage {
+    width: min(78vw, 215px);
+  }
+
+  .detail-tab {
+    flex-basis: 100%;
+  }
+
+  .detail-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .result-section > p,
+  .result-section > ul,
+  .result-section > h3,
+  .result-section > h4,
+  .result-section > .tag-line,
+  .result-section > .data-grid,
+  .result-section > .mini-section {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+/* v13: show pulled card images in detail panels and pair images in synergy panel. */
+.card-detail-header {
+  display: grid;
+  grid-template-columns: minmax(90px, 150px) 1fr;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+}
+
+.card-detail-heading {
+  min-width: 0;
+}
+
+.card-detail-heading .slot-title {
+  text-align: left;
+}
+
+.detail-card-visual {
+  width: min(150px, 100%);
+  justify-self: center;
+}
+
+.detail-card-visual img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 14px 30px var(--shadow);
+  background: #111;
+}
+
+.detail-card-visual.reversed img,
+.pair-mini-card.reversed img {
+  transform: rotate(180deg);
+}
+
+.pair-visuals {
+  display: grid;
+  grid-template-columns: minmax(88px, 128px) auto minmax(88px, 128px);
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 14px;
+}
+
+.pair-mini-card {
+  margin: 0;
+  min-width: 0;
+}
+
+.pair-mini-card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 12px 24px var(--shadow);
+  background: #111;
+}
+
+.pair-mini-card figcaption {
+  margin-top: 8px;
+  display: grid;
+  gap: 2px;
+  text-align: center;
+  line-height: 1.35;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.pair-mini-card figcaption strong {
+  color: var(--text);
+  font-size: 0.86rem;
+}
+
+.pair-mini-card figcaption em {
+  font-style: normal;
+  color: var(--gold);
+  font-size: 0.74rem;
+}
+
+.pair-arrow {
+  color: var(--gold);
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(216, 184, 92, 0.45);
+}
+
+@media (max-width: 680px) {
+  .card-detail-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .card-detail-heading .slot-title {
+    text-align: center;
+  }
+
+  .detail-card-visual {
+    width: min(46vw, 150px);
+  }
+
+  .pair-visuals {
+    grid-template-columns: minmax(78px, 112px) auto minmax(78px, 112px);
+    gap: 8px;
+  }
+
+  .pair-mini-card figcaption {
+    font-size: 0.72rem;
+  }
+
+  .pair-mini-card figcaption strong {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .detail-card-visual {
+    width: min(58vw, 145px);
+  }
+
+  .pair-visuals {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .pair-arrow {
+    font-size: 1.15rem;
+  }
+}
+
+/* v14: make detail and synergy panels left-aligned and compact. */
+.pair-section h2,
+.pair-section .section-lead,
+.pair-card,
+.pair-card h3,
+.pair-card p {
+  text-align: left;
+}
+
+.pair-section h2 {
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.pair-card {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.pair-flow {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+}
+
+.pair-title {
+  margin: 2px 0 0;
+  font-size: 1.02rem;
+}
+
+.pair-visuals {
+  justify-content: start;
+  grid-template-columns: 76px auto 76px;
+  gap: 10px;
+  margin: 0 0 4px;
+}
+
+.pair-mini-card {
+  width: 76px;
+}
+
+.pair-mini-card img {
+  border-radius: 9px;
+  box-shadow: 0 8px 18px var(--shadow);
+}
+
+.pair-mini-card figcaption {
+  margin-top: 6px;
+  text-align: left;
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.pair-mini-card figcaption strong {
+  font-size: 0.72rem;
+}
+
+.pair-mini-card figcaption em {
+  font-size: 0.66rem;
+}
+
+.pair-arrow {
+  align-self: center;
+  font-size: 1.1rem;
+}
+
+.card-detail-header {
+  grid-template-columns: minmax(92px, 150px) minmax(0, 1fr);
+  justify-content: start;
+  justify-items: start;
+  text-align: left;
+}
+
+.card-detail-heading {
+  justify-self: start;
+  align-self: center;
+  text-align: left;
+  width: 100%;
+}
+
+.card-detail-heading .slot-title,
+.card-detail-heading .card-name,
+.card-detail-heading .orientation {
+  text-align: left;
+}
+
+.detail-card-visual {
+  justify-self: start;
+}
+
+@media (max-width: 680px) {
+  .card-detail-header {
+    grid-template-columns: minmax(82px, 112px) minmax(0, 1fr);
+    gap: 12px;
+    text-align: left;
+  }
+
+  .card-detail-heading .slot-title,
+  .card-detail-heading .card-name,
+  .card-detail-heading .orientation {
+    text-align: left;
+  }
+
+  .detail-card-visual {
+    width: min(28vw, 112px);
+    justify-self: start;
+  }
+
+  .pair-visuals {
+    grid-template-columns: 68px auto 68px;
+    gap: 8px;
+    justify-content: start;
+  }
+
+  .pair-mini-card {
+    width: 68px;
+  }
+}
+
+@media (max-width: 420px) {
+  .card-detail-header {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+
+  .detail-card-visual {
+    width: 84px;
+  }
+
+  .pair-visuals {
+    grid-template-columns: 62px auto 62px;
+  }
+
+  .pair-mini-card {
+    width: 62px;
+  }
+
+  .pair-mini-card figcaption {
+    font-size: 0.64rem;
+  }
+}
+
+/* v15: force card detail headings to align left consistently. */
+.card-detail-header,
+.card-detail-header * {
+  text-align: left;
+}
+
+.card-detail-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.card-detail-heading .slot-title,
+.card-detail-heading .card-name,
+.card-detail-heading .orientation {
+  display: block;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left !important;
+}
+
+.card-detail-heading .slot-title {
+  align-self: stretch;
+}
+
+/* v16: keep the ritual spread visible on phones.
+   The spread itself remains 3 columns; detailed reading sections still reflow below. */
+.spread-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: stretch;
+  overflow-x: visible;
+}
+
+.spread-three .slot {
+  min-width: 0;
+}
+
+@media (max-width: 680px) {
+  .spread {
+    gap: clamp(6px, 1.8vw, 10px);
+    padding: 2px 0 10px;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: visible;
+  }
+
+  .spread-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+
+  .spread-three .slot {
+    padding: clamp(6px, 1.8vw, 9px);
+    border-radius: 14px;
+  }
+
+  .spread-three .slot-title {
+    margin-bottom: 6px;
+    font-size: clamp(0.7rem, 2.8vw, 0.86rem);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .spread-three .card-stage {
+    width: min(100%, 26vw, 118px);
+    margin-bottom: 7px;
+  }
+
+  .spread-three .face {
+    border-radius: 11px;
+  }
+
+  .spread-three .card-name {
+    margin-bottom: 2px;
+    font-size: clamp(0.78rem, 3.1vw, 0.96rem);
+    line-height: 1.22;
+  }
+
+  .spread-three .orientation {
+    margin-bottom: 0;
+    font-size: clamp(0.7rem, 2.8vw, 0.86rem);
+    line-height: 1.2;
+  }
+
+  .spread-three .slot-card-summary {
+    min-height: 54px;
+    line-height: 1.35;
+  }
+
+  .spread-three .slot-lead,
+  .spread-three .slot-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .spread {
+    gap: 6px;
+  }
+
+  .spread-three .slot {
+    padding: 6px;
+    border-radius: 12px;
+  }
+
+  .spread-three .card-stage {
+    width: min(100%, 25.5vw, 104px);
+    margin-bottom: 6px;
+  }
+
+  .spread-three .slot-title {
+    font-size: 0.68rem;
+  }
+
+  .spread-three .card-name {
+    font-size: 0.78rem;
+  }
+
+  .spread-three .orientation {
+    font-size: 0.68rem;
+  }
+
+  .spread-three .slot-card-summary {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .spread {
+    gap: 4px;
+  }
+
+  .spread-three .slot {
+    padding: 5px;
+  }
+
+  .spread-three .card-stage {
+    width: min(100%, 25vw, 92px);
+  }
+
+  .spread-three .slot-title,
+  .spread-three .orientation {
+    font-size: 0.64rem;
+  }
+
+  .spread-three .card-name {
+    font-size: 0.72rem;
+  }
+}
+
+/* v19: detail reader is a controlled carousel, not a free horizontal scroller.
+   Tabs remain the primary buttons; on touch screens, a horizontal swipe switches panels. */
+.detail-carousel-shell {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.detail-carousel {
+  --detail-index: 0;
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  -webkit-overflow-scrolling: auto;
+  overscroll-behavior-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0;
+  min-width: 0;
+  touch-action: pan-y;
+}
+
+.detail-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.detail-carousel .detail-panel {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  transform: translateX(calc(var(--detail-index) * -100%));
+  transition: transform 260ms ease;
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+  align-self: flex-start;
+}
+
+.detail-panel[aria-hidden="true"] {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.detail-panel.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 680px) {
+  .detail-carousel {
+    touch-action: pan-y;
+  }
+
+  .detail-carousel .detail-panel {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-carousel .detail-panel {
+    transition: none;
+  }
+}
+
+/* v20: image zoom dialog for detail-reader card images. */
+.image-zoom-button {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+}
+
+.image-zoom-button:focus-visible {
+  outline: 3px solid rgba(216, 184, 92, 0.95);
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+.detail-card-visual {
+  position: relative;
+  display: block;
+}
+
+.detail-card-visual img,
+.pair-mini-image-button img {
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.detail-card-visual:hover img,
+.detail-card-visual:focus-visible img,
+.pair-mini-image-button:hover img,
+.pair-mini-image-button:focus-visible img {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.image-zoom-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.8em;
+  padding: 0.2em 0.55em;
+  border: 1px solid rgba(216, 184, 92, 0.7);
+  border-radius: 999px;
+  background: rgba(13, 11, 20, 0.78);
+  color: var(--gold);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.detail-card-visual:hover .image-zoom-hint,
+.detail-card-visual:focus-visible .image-zoom-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pair-mini-image-button {
+  display: block;
+  width: 100%;
+}
+
+.image-dialog {
+  width: min(92vw, 760px);
+  max-width: 92vw;
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid rgba(216, 184, 92, 0.45);
+  border-radius: 22px;
+  background: rgba(15, 12, 24, 0.96);
+  color: var(--text);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.72), 0 0 42px rgba(216, 184, 92, 0.18);
+  overflow: visible;
+}
+
+.image-dialog::backdrop {
+  background: rgba(6, 5, 10, 0.74);
+  backdrop-filter: blur(5px);
+}
+
+.image-dialog-panel {
+  position: relative;
+  padding: clamp(14px, 3vw, 22px);
+}
+
+.image-dialog-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(216, 184, 92, 0.7);
+  border-radius: 999px;
+  background: rgba(20, 16, 30, 0.98);
+  color: var(--gold);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+.image-dialog-close:hover,
+.image-dialog-close:focus-visible {
+  background: rgba(38, 29, 48, 0.98);
+  outline: 3px solid rgba(216, 184, 92, 0.42);
+  outline-offset: 2px;
+}
+
+.image-dialog-frame {
+  display: grid;
+  place-items: center;
+  max-height: calc(92vh - 44px);
+  overflow: hidden;
+}
+
+.image-dialog-img {
+  display: block;
+  width: auto;
+  max-width: min(82vw, 560px);
+  max-height: calc(92vh - 72px);
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  border-radius: 18px;
+  border: 1px solid rgba(216, 184, 92, 0.35);
+  background: #111;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65);
+}
+
+.image-dialog.is-reversed .image-dialog-img {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 520px) {
+  .image-dialog {
+    width: min(94vw, 420px);
+    max-width: 94vw;
+    border-radius: 18px;
+  }
+
+  .image-dialog-panel {
+    padding: 12px;
+  }
+
+  .image-dialog-close {
+    top: -10px;
+    right: -8px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .image-dialog-img {
+    max-width: 86vw;
+    max-height: calc(92vh - 60px);
+    border-radius: 14px;
+  }
+
+  .image-zoom-hint {
+    display: none;
+  }
+}
+
+/* v22: reuse the detail image dialog affordance in the card library. */
+.library-image-button img {
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.library-image-button:hover img,
+.library-image-button:focus-visible img {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.library-image-button:hover .image-zoom-hint,
+.library-image-button:focus-visible .image-zoom-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* v24: keep card image slots stable while WebP variants load/decode. */
+.card-stage,
+.detail-card-visual,
+.pair-mini-image-button,
+.library-image-button {
+  aspect-ratio: 2 / 3;
+}
+
+.face img,
+.detail-card-visual img,
+.pair-mini-image-button img,
+.library-image-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #111;
+}
+
+.slot.revealed .card {
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .face,
+  .detail-card-visual img,
+  .library-image-button img {
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.34);
+  }
+}
