@@ -1,0 +1,95 @@
+/*
+  devil-common.css
+  Shared Devil-page layer. Loaded after app.css and before each Devil page's own CSS.
+
+  Scope:
+  - Devil-page font tokens
+  - Shared hero layout and typography
+  - Large-panel white-flicker safeguard
+
+  Keep page-specific layout, game board, records tabs, and dialogs in each page CSS.
+*/
+/*
+  Font tokens shared by 悪魔の遊戯室 and 遊戯の履歴.
+  Google Fonts now loads Noto Serif JP at 700 only to reduce page-transition font swaps.
+  Keep Japanese serif fallbacks so text remains stable if the web font is still loading.
+*/
+.devil-game-body,
+.devil-records-body {
+  --devil-font-display: "Cinzel Decorative", "Cormorant Garamond", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif CJK JP", "Source Han Serif JP", Georgia, serif;
+  --devil-font-serif: "Cormorant Garamond", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif CJK JP", "Source Han Serif JP", "MS PMincho", Georgia, serif;
+  --devil-font-ja-serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif CJK JP", "Source Han Serif JP", "MS PMincho", serif;
+}
+
+/* Shared Devil-page hero. Page CSS may tune only page-specific spacing or scale. */
+.devil-page-hero {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  width: min(100%, 860px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.devil-page-hero > .eyebrow {
+  margin: 0;
+  color: var(--gold);
+  font-family: var(--devil-font-serif);
+  font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.35;
+  text-indent: 0.18em;
+  text-transform: uppercase;
+}
+
+.devil-page-hero :is(h1, h2) {
+  margin: 0;
+  color: var(--gold);
+  font-family: var(--devil-font-serif);
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-wrap: balance;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.42);
+}
+
+
+@media (max-width: 640px) {
+  .devil-page-hero {
+    gap: 6px;
+    justify-items: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .devil-page-hero > .eyebrow {
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-indent: 0.14em;
+  }
+
+  .devil-page-hero :is(h1, h2) {
+    font-size: clamp(1.78rem, 9vw, 2.45rem);
+  }
+}
+
+
+/* v106: avoid large backdrop-filter repaint artifacts on Devil pages.
+   Some mobile browsers composite a pale rectangular tile while scrolling
+   large translucent panels with backdrop-filter. Keep the stained-glass
+   translucency by color layering, but do not blur the page behind these
+   large panels. Dialog backdrops keep their own blur. */
+.devil-game-body .panel,
+.devil-records-body .panel {
+  background:
+    radial-gradient(circle at top left, rgba(216, 184, 92, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(40, 36, 81, 0.92), rgba(25, 23, 58, 0.88));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.devil-game-body .app-header,
+.devil-records-body .app-header {
+  isolation: isolate;
+}

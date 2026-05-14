@@ -1,0 +1,363 @@
+/*
+  devil-records.css
+  Page-specific layer for 遊戯の履歴.
+  Scope: tabs, achievements, detailed records, storage actions, and reset dialogs.
+  Shared Devil-page fonts, hero basics, and panel flicker safeguards live in devil-common.css.
+*/
+.devil-records-page {
+  display: grid;
+  gap: 18px;
+}
+
+.devil-records-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.devil-records-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+
+/* Records-page typography accents. */
+.devil-records-body .eyebrow,
+.devil-records-section-header h2,
+.devil-records-card h3,
+.devil-records-stat strong,
+.devil-achievement-card h3,
+.devil-records-dialog h3 {
+  font-family: var(--devil-font-serif);
+  font-weight: 700;
+}
+
+.devil-records-note,
+.devil-records-muted {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* Tab switcher. */
+.devil-records-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 10px;
+}
+
+.devil-records-tab {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.devil-records-tab.is-active,
+.devil-records-tab[aria-selected="true"] {
+  background: var(--gold-soft);
+  border-color: rgba(216, 184, 92, 0.72);
+  color: #fff7d8;
+  box-shadow: 0 0 0 2px rgba(216, 184, 92, 0.12);
+}
+
+.devil-records-tab:focus-visible,
+.devil-records-dialog :where(button, input):focus-visible {
+  outline: 3px solid rgba(255, 245, 189, 0.86);
+  outline-offset: 3px;
+}
+
+.devil-records-panel {
+  display: grid;
+  gap: 18px;
+}
+
+/* Keep records layouts shrink-safe in very narrow viewports without adding breakpoint-specific branches. */
+.devil-records-page,
+.devil-records-page > *,
+.devil-records-panel,
+.devil-records-summary-grid,
+.devil-records-columns,
+.devil-achievement-list,
+.devil-records-card,
+.devil-achievement-card {
+  min-width: 0;
+}
+
+.devil-records-note,
+.devil-records-muted,
+.devil-records-card,
+.devil-achievement-card {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Summary/stat cards and detail tables. */
+.devil-records-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+  gap: 12px;
+}
+
+.devil-records-stat,
+.devil-records-card,
+.devil-achievement-card {
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.20);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.devil-records-stat {
+  padding: 14px;
+}
+
+.devil-records-stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.devil-records-stat strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--gold);
+  font-size: clamp(1.45rem, 4vw, 2.05rem);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.devil-records-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 14px;
+}
+
+.devil-records-card {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.devil-records-card h3 {
+  color: var(--gold);
+}
+
+.devil-records-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 360px;
+}
+
+.devil-records-table th,
+.devil-records-table td {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 9px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.devil-records-table th {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Achievement cards and progress indicators. */
+.devil-achievement-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 12px;
+}
+
+.devil-achievement-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.devil-achievement-card.is-unlocked {
+  border-color: rgba(216, 184, 92, 0.7);
+  background: linear-gradient(180deg, rgba(216, 184, 92, 0.14), rgba(0, 0, 0, 0.22));
+}
+
+.devil-achievement-card.is-hidden:not(.is-unlocked) {
+  border-style: dashed;
+  opacity: 0.82;
+}
+
+.devil-achievement-card__meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.devil-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.devil-badge--unlocked {
+  border-color: rgba(216, 184, 92, 0.7);
+  background: var(--gold-soft);
+  color: #fff3c3;
+}
+
+.devil-badge--hidden {
+  border-color: rgba(180, 85, 85, 0.62);
+  color: #f3c7c7;
+}
+
+.devil-achievement-card h3 {
+  margin-bottom: 2px;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.devil-achievement-card p {
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.devil-progress {
+  display: grid;
+  gap: 5px;
+}
+
+.devil-progress__bar {
+  overflow: hidden;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.devil-progress__bar span {
+  display: block;
+  height: 100%;
+  width: var(--progress, 0%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(216, 184, 92, 0.55), rgba(255, 238, 158, 0.95));
+}
+
+.devil-progress__label {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* Data reset actions and confirmation dialogs. */
+.devil-data-actions p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.devil-data-actions__buttons,
+.devil-records-dialog__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.devil-data-actions__buttons .button-link,
+.devil-records-dialog__actions .button-link {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.devil-danger-button {
+  border-color: rgba(255, 128, 128, 0.64) !important;
+  background: rgba(120, 0, 0, 0.24) !important;
+  color: #ffe3e3 !important;
+}
+
+.devil-danger-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.devil-records-dialog {
+  width: min(620px, calc(100% - 28px));
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 0;
+  color: var(--text);
+  background: rgba(10, 8, 24, 0.96);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+}
+
+.devil-records-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.devil-records-dialog__panel {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.devil-records-dialog__panel p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.devil-confirm-input-label {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.devil-confirm-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.24);
+  color: var(--text);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+.devil-empty-message {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .devil-records-header,
+  .devil-records-section-header {
+    display: grid;
+  }
+
+  .devil-records-header {
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+
+  .devil-records-tab {
+    flex: 1 1 120px;
+  }
+
+  .devil-records-card,
+  .devil-achievement-card {
+    border-radius: 16px;
+  }
+}
